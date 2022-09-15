@@ -1,0 +1,83 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Testing Form</h2>
+  <form  [formGroup]="month">
+    <div class="form-group">
+      <label for="no">Enter Date:</label>
+      <input type="text" class="form-control"  
+       name="day" formControlName="day">
+     </div>
+     
+      
+  <button type="submit" (click)="getData()" class="btn btn-default">submit</button>
+  </form>
+
+  <h3>Output:{{result}}</h3>
+</div>
+
+</body>
+</html>
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+
+  
+  month!: FormGroup;
+  result:string='';
+  
+  constructor () {}
+
+  ngOnInit(): void {
+
+    this.month=new FormGroup({
+      day:new FormControl('',[]),  
+      
+ 
+    });
+   
+    
+  }
+  getData()
+  {
+  let Day =this.month.value.day;
+  if(Day==1 || Day==21||Day==31)
+  this.result=Day+"st";
+
+  else if(Day==2||Day==22)
+  this.result=Day+"nd";
+
+  else if(Day==3||Day==23)
+  this.result=Day+"rd";
+
+  else
+  this.result=Day+"th";
+  
+  
+  
+  
+   
+ 
+  }
+}

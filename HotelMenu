@@ -1,0 +1,159 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1 style="text-align:center;color:rgb(255, 0, 0)"><u>Menu Card</u></h1>
+<table class="table table-striped">
+<thead>
+  <tr>
+    <th>S.No.</th>
+    <th>Dishes</th>
+    <th>MRP</th>
+    <th>Type</th>
+    <th>Plate</th>
+    <th>Total</th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let item of records;let i = index;">
+    <td>{{item.id}}</td>
+    <td>{{item.dish}}</td>
+    <td>{{item.cmrp}}</td>
+    <td>{{item.type}}
+    <select (change)="getMRP($event,i)">
+      <option value="0">Select</option>
+      <option value="q">Quarter</option>
+      <option value="h">Half</option>
+      <option value="f">Full</option>
+    </select></td>
+   
+    <td>{{item.plate}}
+      <button type="submit"(click)="getData(item,i)" class="btn btn-default">+</button>
+      <button type="submit" class="btn btn-primary">{{item.counter}}</button>
+      <button type="submit"(click)="getDataSub(item,i)" class="btn btn-default"[disabled]="item.counter==0">-</button>
+
+
+    </td>
+   
+    <td>{{item.count}}</td>
+    <td>{{item.tmrp}}</td>
+  </tr>
+</tbody>
+</table>
+<h3>Bill:-{{bill}}</h3>
+<h3>Tax:-</h3>
+<h3>Total Payble</h3>
+
+</body>
+</html>
+
+####app.component.ts
+
+import { Target } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  
+  title = 'HotelMenu';
+  HotelMenu!:FormGroup;
+  id:number=0;
+  dish:any;
+  name:any;
+  mrp:number=0;
+  Total_price:number=0;
+  plate:any=[];
+  type:any;
+  bill:number=0;
+  Total_Payble:number=0;
+  Tax:number=0;
+  records:any=[
+    {id:1,dish:"Plain Maggi",qmrp:49,hmrp:99,fmrp:129,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:2,dish:"Vegetable Maggi",qmrp:65,hmrp:110,fmrp:159,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:3,dish:"Cheese Maggi",qmrp:50,hmrp:99,fmrp:139,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:4,dish:"Paneer Maggi",qmrp:70,hmrp:120,fmrp:169,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:5,dish:"Sandwich",qmrp:49,hmrp:99,fmrp:129,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:6,dish:"Cheese S/W",qmrp:59,hmrp:103,fmrp:129,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:7,dish:"Chilli Paneer",qmrp:99,hmrp:179,fmrp:249,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:8,dish:"Kulhad Chat",qmrp:39,hmrp:59,fmrp:109,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:9,dish:"Kulfi",qmrp:49,hmrp:99,fmrp:129,cmrp:0,tmrp:0,type:'',counter:0},
+    {id:10,dish:"Chilli Potato",qmrp:70,hmrp:139,fmrp:269,cmrp:0,tmrp:0,type:'',counter:0},
+  ]
+  
+  ngOnInit(): void {
+    
+  }
+  getData(item:any,i:number){
+    var index=this.records.map(function(x:any){return x.id;}).indexOf(item.id);
+    this.records[index].counter++;
+
+    this.records[i].tmrp=(this.records[i].cmrp*this.records[i].counter);
+    this.bill=0;
+    this.records.forEach((item:any)=>{
+     
+      if(item.tmrp!=0)
+      {
+       
+      this.bill=this.bill+item.tmrp;
+      // console.log("-Item :",item,"jjjjjj:",item.tmrp,"Billl:",this.bill);
+      }
+
+    });
+    console.log("+Bill :",this.bill);
+   
+    
+  }
+  getDataSub(item:any,i:number){
+    var index=this.records.map(function(x:any){return x.id;}).indexOf(item.id);
+    {
+      this.records[index].counter--;
+  }
+
+  this.records[i].tmrp=(this.records[i].cmrp*this.records[i].counter);
+  this.bill=0;
+  this.records.forEach((item:any)=>{
+  
+    if(item.tmrp!=0)
+    {
+      // console.log("-Item :",item,"jjjjjj:",item.tmrp);
+    this.bill=this.bill+item.tmrp;
+    }
+    
+  });
+  console.log("-Bill :",this.bill);
+ 
+    }
+    getMRP(e:any,index:number)
+    {
+      if(e.target.value=="q")
+      this.records[index].cmrp=this.records[index].qmrp;
+      else if(e.target.value=="h")
+      this.records[index].cmrp=this.records[index].hmrp;
+      else if(e.target.value=="f")
+      this.records[index].cmrp=this.records[index].fmrp;
+      else
+      this.records[index].cmrp=0;
+    }
+    totalMRP(t:any,index:number){
+      
+
+    }
+  }
+
+

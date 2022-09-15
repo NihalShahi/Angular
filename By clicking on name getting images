@@ -1,0 +1,44 @@
+####app.component.html
+
+<button (click)="getImage('MN')">Manmohan</button>
+<button (click)="getImage('M')">Modi</button>
+<br><br>
+<br><br>
+
+
+
+<div *ngIf="selected=='MN'">
+  
+  <img src="assets/manmaohan.jpg" width="100" height="100">
+</div>
+
+<div *ngIf="selected=='M'">
+  <img src="assets/modi.jpg" width="100" height="100">
+</div>
+
+
+####app.component.ts
+
+import { R3SelectorScopeMode } from '@angular/compiler';
+import { Component, ModuleWithProviders, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+ 
+  title = 'image';
+  selected:string='M';
+  
+
+  ngOnInit(): void {
+  }
+getImage(p:string)
+{
+  this.selected=p;
+}
+
+
+}

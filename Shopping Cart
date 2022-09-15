@@ -1,0 +1,123 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/li0bs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="row">
+       
+    <div class="col-sm-8">
+    <!------------------------------------------------->
+
+    <div class="row">
+
+
+      <div class="col-md-4"  *ngFor="let item of products">
+        <div class="thumbnail">
+          <a href="/w3images/lights.jpg" target="_blank">
+            <img [src]="item.img" alt="Lights" style="height:100px;width:100px">
+            <div class="caption">
+              
+              
+              <p>MRP-{{item.mrp}}</p>
+            </div>
+          </a>
+          <button type="submit" (click)="getData(item)" class="btn btn-default">+</button>
+          <button type="submit" (click)="getData(item)" class="btn btn-primary">{{ item.counter }}</button>
+          <button type="submit" (click)="getDataSub(item)" class="btn btn-default" [disabled]="item.counter==0">-</button>
+        </div>
+      </div>
+      
+    </div>
+    <!------------------------------------------------->
+  </div>
+
+
+    <div class="col-sm-4"> <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Product Id</th>
+          <th>MRP</th>
+          <th>Images</th>
+          <th>Count</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+       <tr *ngFor="let item of mycart">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.mrp}}</td>
+        <td><img [src]="item.img" style="height:100px;width:100px;"></td>
+        <td>{{ item.count }}</td>
+       </tr>
+      </tbody>
+    </table></div>
+    
+  </div>
+</body>
+</html>
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+
+  
+  title = 'cart';
+  cart!:FormGroup;
+  id:number=0;
+  name:string='';
+  mrp:number=0;
+  img:any;
+  mycart:any=[];
+  constructor(){}
+  
+  products:any=[
+    {id:101,name:'Mobile',mrp:8999,img:"assets/mobile.jpg",counter:0},
+    {id:102,name:'Television',mrp:9999,img:"assets/t.v.jpg",counter:0},
+    {id:103,name:'Freeze',mrp:2000,img:"assets/freeze.jpg",counter:0},
+    {id:104,name:'Cooler',mrp:12000,img:"assets/cooler.jpg",counter:0}
+  ]
+
+
+
+  ngOnInit(): void {
+    
+  }
+  
+  getData(item:any) 
+  {
+    var index = this.products.map(function(x:any) {return x.id; }).indexOf(item.id);
+     this.products[index].counter++;
+
+  }
+
+  getDataSub(item:any) 
+  {
+    
+    
+    var index = this.products.map(function(x:any) {return x.id; }).indexOf(item.id);
+    // if(this.products[index].counter!=0)
+     this.products[index].counter--;
+
+  }
+
+
+
+}

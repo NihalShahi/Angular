@@ -1,0 +1,118 @@
+####app.component.html
+
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Testing Form</h2>
+  <form  [formGroup]="loan">
+    <div class="form-group">
+      <label for="no">Enter the loan amount</label>
+      <input type="number" class="form-control"  
+       name="principal" formControlName="principal">
+     </div>
+     <div class="form-group">
+      <label for="no">Enter the time</label>
+      <input type="number" class="form-control"  
+       name="time" formControlName="time">
+     </div>
+
+    
+
+     <div class="form-group">
+      <label for="no">Loan Type</label>
+      
+       <select name="loan_type" formControlName="loan_type">
+        <option value="HOME"> Home Loan</option>
+        <option value="CAR">Car Loan</option>
+        <option value="EDU"> Education Loan</option>
+        <option value="AGR">Agriculture Loan</option>
+       </select>
+     </div>
+     
+      
+  <button type="submit" (click)="getData()" class="btn btn-default">Calculate</button>
+  </form>
+
+  <h3>{{si}}</h3>
+  <h3> {{emi}}</h3>
+  <h3>{{t_emi}}</h3>
+  <h3>{{amt}}</h3>
+  <h3>{{result}}</h3> 
+</div>
+
+</body>
+</html>
+
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+  loan!:FormGroup;
+  
+  p:number=0;
+  t:number=0;
+  si:any;
+  emi:any;
+  amt:any;
+  t_emi:any;
+  result:any;
+  constructor(){}
+
+  ngOnInit(): void {
+    this.loan=new FormGroup({
+    principal:new FormControl('',[]),
+    time:new FormControl('',[]),
+    loan_type:new FormControl('',[]),
+   });
+
+   
+  
+  }
+  title = 'loan';
+  getData(){
+    let irate=0;
+    this.p=parseInt(this.loan.value.principal);
+    this.t=parseInt(this.loan.value.time);
+    let loan_type=this.loan.value.loan_type;
+    switch(loan_type){
+      case 'HOME':irate=8;
+        break;
+      case 'CAR':irate=10;
+      
+        break;
+      case 'EDU':irate=12;
+      
+        break;
+      case 'AGR':irate=5;
+        break;
+
+      default:
+      irate=0;
+    }
+console.log(this.p,"    ",this.t,"   ",irate);
+    this.si =(this.p*this.t*irate)/100;
+    this.amt=(this.p+this.si);
+    this.emi=(this.amt/(this.t*12));
+    this.t_emi=(this.emi*(this.t*12));
+    
+
+  }
+}

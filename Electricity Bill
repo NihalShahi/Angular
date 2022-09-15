@@ -1,0 +1,77 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Testing Form</h2>
+  <form  [formGroup]="bill">
+    <div class="form-group">
+      <label for="no">Marks:</label>
+      <input type="text" class="form-control"  placeholder="Enter any no"
+       name="units" formControlName="units">
+     </div>
+     
+      
+  <button type="submit" (click)="getData()" class="btn btn-default">Submit</button>
+  </form>
+
+  <h3>Output:{{result | currency}}</h3>
+</div>
+
+</body>
+</html>
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+
+  
+  bill!: FormGroup;
+  result:number=0;
+  
+  
+  constructor () {}
+
+  ngOnInit(): void {
+
+    this.bill=new FormGroup({
+      units:new FormControl('',[]), 
+      
+ 
+    });
+   
+    
+  }
+  getData()
+  {
+  let m=this.bill.value.units;
+  
+    if(m>=1 && m<=100)
+    this.result=m;
+
+    else if(m>100 && m<=300)
+    this.result=100+(m-100)*3.80;
+    else if (m>300 && m<=450)
+    this.result=100+(200*3.80)+(m-300)*4.20;
+    else 
+    this.result=100+(200*3.80)+(300*4.20)+(m-450)*6.80
+  }
+}

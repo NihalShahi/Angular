@@ -1,0 +1,118 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Testing Form</h2>
+  <form  [formGroup]="operator">
+    <div class="form-group">
+      <label for="no">Enter the First No.:</label>
+      <input type="text" class="form-control"  
+       name="fno" formControlName="fno">
+     </div>
+
+     <div class="form-group">
+      <label for="no">Enter the Second No.:</label>
+      <input type="text" class="form-control"  
+       name="sno" formControlName="sno">
+     </div>
+
+     <div class="form-group">
+      <label for="no">Enter Operator:</label>
+      
+       <select name="opr" formControlName="opr" >
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+       </select>
+     </div>
+     
+      
+  <button type="submit" (click)="getData()" class="btn btn-default">Submit</button>
+  </form>
+
+  <h3>Result:{{result}}</h3>
+</div>
+
+</body>
+</html>
+
+####app.component.ts
+
+import { ConditionalExpr } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+
+  
+  operator!: FormGroup;
+  result:any;
+  a:number=0;
+  b:number=0;
+  
+  
+  constructor () {}
+
+  ngOnInit(): void {
+
+    this.operator=new FormGroup({
+      fno:new FormControl('',[]),  
+      sno:new FormControl('',[]),  
+      opr:new FormControl('',[]),  
+      
+      
+ 
+    });
+   
+    
+  }
+  getData()
+  {
+  
+    
+  this.a= parseInt(this.operator.value.fno);
+  this.b=parseInt(this.operator.value.sno);
+  let opr=this.operator.value.opr;
+
+  switch(opr)
+  {
+case '+':this.result="Sum="+(this.a+this.b);
+break
+
+case'-':this.result="Sub="+(this.a-this.b);
+break
+
+case'*':this.result="Multiply="+(this.a*this.b);
+break
+
+case'/':this.result="Divide="+(this.a/this.b);
+break
+
+default:this.result="Sorry";
+
+  }
+  
+  
+  
+   
+ 
+  }
+}

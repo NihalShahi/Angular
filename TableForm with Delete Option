@@ -1,0 +1,124 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    
+    <h2>Testing Form</h2>
+    <form  [formGroup]="tableform" style="border: solid;">
+      <div class="form-group">
+        <label for="no">Enter Id:</label>
+        <input type="text" class="form-control"  placeholder="Enter ID" name="id" formControlName="id">
+      </div>
+      <div class="form-group">
+        <label for="no">Enter Name:</label>
+        <input type="text" class="form-control"  placeholder="Enter Name" name="name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label for="no">Enter MRP:</label>
+        <input type="text" class="form-control"  placeholder="Enter mrp" name="mrp" formControlName="mrp">
+      </div>
+      <div class="form-group">
+        <label for="no">Enter Discount:</label>
+        <input type="text" class="form-control"  placeholder="Enter Discount" name="Discount" formControlName="Discount">
+      </div>
+      <button type="add" (click)="getData()" class="btn btn-default" style="color:green;border: solid;">Add To Cart</button>
+    </form>
+    <br>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Product ID</th>
+          <th>Product Name</th>
+          <th>MRP</th>
+          <th>Discount</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+     <tbody>
+      <tr *ngFor="let item of records;let i=index">
+       
+        <td>{{i+1}}</td>
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.mrp}}</td>
+        <td>{{item.dis}}</td>
+        <td><span class="glyphicon glyphicon-remove" style="color:red;" (click)="deleteItem(i)"></span></td>
+      
+      </tr>
+
+      </tbody>
+      </table>
+     <u> <h3>Total Items:-{{Total_Item}}</h3></u>
+      <u><h3>Total Price:-{{Total_Price}}</h3></u>
+
+  </div>
+</body>
+</html>
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+  tableform!:FormGroup;
+  id:number=0;
+  name:string='';
+  mrp:number=0;
+  Discount:number=0;
+  Total_Item:number=0;
+  Total_Price:number=0;
+  title= 'tableform';
+  records:any=[];
+  
+  constructor(){}
+
+  ngOnInit(): void {
+    this.tableform=new FormGroup({
+      id:new FormControl('',[]),name:new FormControl('',[]),mrp:new FormControl('',[]),Discount:new FormControl('',[])
+    });
+  }
+  getData()
+  {
+  this.records.push({id:this.tableform.value.id,name:this.tableform.value.name,mrp:parseInt(this.tableform.value.mrp),dis:this.tableform.value.Discount});
+  this.tableform.reset();
+  this.Total_Item=0 ;
+  this.Total_Price=0;
+for(let x=0;x<this.records.length;x++)
+{
+  this.Total_Item++;
+  console.log("MRP:",this.records[x].mrp);
+  this.Total_Price= this.Total_Price+ parseInt(this.records[x].mrp);
+
+}
+
+
+    }
+    deleteItem(index:number){
+       this.records.splice(index,1);
+       this.Total_Item=0;
+       this.Total_Price=0;
+     for(let x=0;x<this.records.length;x++)
+     {
+       this.Total_Item++;
+       this.Total_Price= this.Total_Price+ parseInt(this.records[x].mrp);
+     
+     }
+    }
+}

@@ -1,0 +1,38 @@
+####app.component.html
+
+<button (click)="getcolor()"> {{  selected==true?"yellow":"red"}}</button>
+
+<div *ngIf="selected==true"style="background-color:yellow;height:200px;width:200px;">
+  Yellow
+</div>
+
+<div *ngIf="selected==false"style="background-color:red;height:200px;width:200px;">
+  Red
+</div>
+
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+ 
+  title = 'color';
+  selected:boolean=true;
+  ngOnInit(): void {
+    
+  }
+
+  getcolor()
+  {
+    this.selected=!this.selected;
+  }
+  
+
+  
+}

@@ -1,0 +1,63 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Testing Form</h2>
+  <form  [formGroup]="form">
+    <div class="form-group">
+      <label for="no">Enter no:</label>
+      <input type="text" class="form-control"  placeholder="Enter any no" name="first_no" formControlName="first_no">
+    </div>
+    <button type="submit" (click)="getdata()" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+</body>
+</html>
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  title = 'Form';FormGroup: any;
+  first_no_data:number=0;
+  form: any;
+
+  constructer () {}
+
+  ngOnInit(): void {
+     this.form = new this.FormGroup({
+      first_no: new FormControl('',[])
+     });
+    }
+    getdata()
+    {
+      this.first_no_data=this.form.value.first_no;
+      console.log("Data:",this.first_no_data);
+    }
+ 
+ 
+  
+
+
+
+}
+

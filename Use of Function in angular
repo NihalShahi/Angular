@@ -1,0 +1,56 @@
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+ 
+  title = 'array';
+  year_list:number[]=[1,4,5,7,9,78,66,99,56];
+  form!:FormGroup;
+  
+
+  ngOnInit(): void {
+
+
+   let index=this.year_list.indexOf(99);
+   console.log("Index of 99:",index);
+   console.log("Index of 99:",this.year_list.lastIndexOf(99));
+   
+  let afterjoin=this.year_list.join('#');
+  console.log("Join String:",afterjoin);
+
+  let square_array=this.year_list.map((item:any)=> item*item);
+  console.log("Square:",square_array);
+
+  let d=this.year_list.slice(2,5);
+  console.log("After Slice:",d);
+  
+ let m= this.year_list.sort((a,b)=>  b-a);
+  console.log("Sorted Array:",m);
+
+
+    // this.form = new FormGroup({
+    //   year: new FormControl('',[]),
+    //   booking_year: new FormControl('',[])
+
+    //  });
+
+
+
+
+  }
+ getvalue(){
+   
+  //  let y=this.form.value.year;
+  //  this.year_list.push(y);
+  //  console.log(this.year_list);
+      
+ }
+
+}

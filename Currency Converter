@@ -1,0 +1,96 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Testing Form</h2>
+  <form  [formGroup]="currency">
+    <div class="form-group">
+      <label for="no">Enter amount</label>
+      <input type="number" class="form-control"  
+       name="amount" formControlName="amount">
+     </div>
+     
+
+    
+
+     <div class="form-group">
+      <label for="no">currency_type</label>
+      
+       <select name="currency_type" formControlName="currency_type">
+        <option value="DOLLAR">Dollar</option>
+        <option value="DINAR">Dinar</option>
+        <option value="POUND">Pound</option>
+        <option value="EURO">Euro</option>
+       </select>
+     </div>
+     
+      
+  <button type="submit" (click)="getData()" class="btn btn-default">Calculate</button>
+  </form>
+  <h3>{{result}}</h3>
+ 
+</div>
+
+</body>
+</html>
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+  currency!:FormGroup;
+  amt:any;
+  result:any;
+
+
+
+  constructor(){}
+  ngOnInit(): void {
+    this.currency=new  FormGroup({amount:new FormControl('',[]),
+  currency_type:new FormControl('',[])});
+      
+     
+  
+  }
+
+  title = 'currency';
+  getData(){
+   
+    this.amt=parseInt(this.currency.value.amount);
+    let currency_type=this.currency.value.currency_type;
+    switch(currency_type){
+      case'DOLLAR':
+        this.result=this.amt*79;
+        break;
+      case'DINAR':
+        this.result=this.amt*258;
+        break;
+      case'POUND':
+        this.result=this.amt*95;
+        break;
+      case'EURO':
+        this.result=this.amt*80;
+        break;
+      default:
+        this.result="Invalid";
+    }
+ }
+}

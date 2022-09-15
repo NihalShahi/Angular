@@ -1,0 +1,46 @@
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+ 
+  title = 'loop2';
+
+  ngOnInit(): void {
+    
+let n=786,c=0,a=0;
+while(n>0)
+{
+
+c= n%10;
+a=a+c ;
+n=parseInt((n/10).toString());
+
+}
+console.log("sum of all the digits:",a);
+
+let x=121,temp=x,rev=0, y;
+while(x>0)
+{
+y=x%10;
+rev=rev*10+y;
+x=parseInt((x/10).toString());
+}
+if (temp==rev)
+{
+  console.log("Palindrome")
+}
+else{
+  console.log("Not Palindrome")
+}
+
+
+
+  }
+  
+}

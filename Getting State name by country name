@@ -1,0 +1,86 @@
+####app.component.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+ <div class="row"><br>
+ <div class="col-sm-12">
+  <select (change)="getState($event)">
+    <option *ngFor="let item of Country_list"[value]="item.id">{{item.c_name}}</option>
+  </select>
+
+  <select>
+    <option *ngFor="let item of selected_State_list"[value]="item.sid">{{item.s_name}}</option>
+  </select>
+
+ </div>
+</div>
+
+</body>
+</html>
+
+
+####app.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+ 
+  title = 'Country';
+  Country!:FormGroup;
+  id:number=0;
+  name:string='';
+  Country_list:any=[
+    {id:0,c_name:"Select"},
+    {id:1,c_name:"India"},
+    {id:2,c_name:"USA"},
+    {id:3,c_name:"RUSSIA"},
+    {id:4,c_name:"JAPAN"},
+  ];
+
+  selected_State_list:any;
+  State_list:any=[
+    
+    {sid:1,cid:1,s_name:"Uttar Pradesh"},
+    {sid:2,cid:1,s_name:"Madhya Pradesh"},
+    {sid:3,cid:1,s_name:"Delhi"},
+    {sid:4,cid:2,s_name:"Alabama"},
+    {sid:5,cid:2,s_name:"Alaska"},
+    {sid:6,cid:2,s_name:"Arizona"},
+    {sid:7,cid:3,s_name:"Adygea"},
+    {sid:8,cid:3,s_name:"Altai"},
+    {sid:9,cid:3,s_name:"Bashkortostan"},
+    {sid:10,cid:4,s_name:"Hokkaido"},
+    {sid:11,cid:4,s_name:"Kinki"},
+    {sid:12,cid:4,s_name:"Tohoku"},
+  ];
+
+
+  ngOnInit(): void {
+    
+  }
+  getState(item:any)
+  {
+    console.log("Selected Country:",item.target.value);
+    this.selected_State_list = this.State_list.filter((x:any)=> {
+
+      if(x.cid==item.target.value)
+      return x;
+    });
+    console.log("Selected States:",this.selected_State_list);
+  }
+}

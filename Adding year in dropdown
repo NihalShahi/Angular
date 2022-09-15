@@ -1,0 +1,58 @@
+####app.component.html
+
+<form [formGroup]="form">
+  Enter Year <input type="text" class="form-control"  placeholder="Enter year" name="year" formControlName="year">
+  <br><br>
+  <button (click)="getvalue()"> Add</button><br><br>
+  </form>
+  
+  Booking Year
+  <select>
+    
+    <option *ngFor="let y of year_list">{{y}}</option>
+    <option *if="y>2024"></option>
+  </select>
+  
+  
+  ####app.component.ts
+  
+  import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+ 
+  title = 'array';
+  year_list:any=[];
+  form!:FormGroup;
+  
+
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      year: new FormControl('',[]),
+      booking_year: new FormControl('',[])
+      
+     });
+  }
+ getvalue(){
+   
+   let y=this.form.value.year;
+   if(y>2022){
+    console.log("value cannot be added");
+   }
+   else{
+   this.year_list.push(y);
+   console.log(this.year_list);
+   }
+      
+ }
+
+}
+
+  
+  
+  
